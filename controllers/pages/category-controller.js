@@ -1,4 +1,5 @@
-const { Category } = require('../models')
+const { Category } = require('../../models')
+
 const categoryController = {
   getCategories: (req, res, next) => {
     return Promise.all([
@@ -41,4 +42,5 @@ const categoryController = {
       .catch(err => next(err))
   }
 }
+
 module.exports = categoryController
