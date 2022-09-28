@@ -2,8 +2,6 @@ const bcrypt = require('bcryptjs')
 const { User } = require('../models')
 const userServices = {
   signUp: (req, cb) => {
-    console.log('pwd: ', req.body.password)
-    console.log('pwd: ', req.body.passwordCheck)
     if (req.body.password !== req.body.passwordCheck) throw new Error('Passwords do not match!')
     User.findOne({ where: { email: req.body.email } })
       .then(user => {

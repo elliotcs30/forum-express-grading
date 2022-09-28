@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs') // 載入 bcrypt
 const { User, Restaurant, Comment, Favorite, Like, Followship } = require('../../models')
 const { imgurFileHandler } = require('../../helpers/file-helpers') // 將 file-helper 載進來
 const userServices = require('../../services/user-services')
@@ -10,7 +9,7 @@ const userController = {
     userServices.signUp(req, (err, data) => {
       if (err) return next(err)
       req.flash('success_messages', '成功註冊帳號！')
-      res.redirect('/signup', data)
+      res.redirect('/signin')
     })
   },
   signInPage: (req, res) => {
