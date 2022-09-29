@@ -11,6 +11,19 @@ const adminServices = {
       .then(restaurants => cb(null, { restaurants }))
       .catch(err => cb(err))
   },
+  getRestaurant: (req, cb) => {
+    // 去資料庫用 id 找一筆資料
+    Restaurant.findByPk(req.params.id, {
+      raw: true, // 找到以後整理格式再回傳
+      nest: true,
+      include: [Category]
+    })
+      .then(restaurant => cb(null, { restaurant }))
+      // if (!restaurant) throw new Error("Restaurant didn't exist!") //  如果找不到，回傳錯誤訊息，後面不執行
+      // res.render(restaurants => cb(null, { restaurants }))
+      .catch(err => cb(err))
+  },
+
   postRestaurant: (req, cb) => {
     const { name, tel, address, openingHours, description, categoryId } = req.body
     if (!name) throw new Error('Restaurant name is required!')

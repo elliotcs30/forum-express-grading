@@ -49,15 +49,7 @@ const adminController = {
     })
   },
   getRestaurant: (req, res, next) => {
-    // 去資料庫用 id 找一筆資料
-    Restaurant.findByPk(req.params.id, {
-      raw: true, // 找到以後整理格式再回傳
-      nest: true,
-      include: [Category]
-    }).then(restaurant => {
-      if (!restaurant) throw new Error("Restaurant didn't exist!") //  如果找不到，回傳錯誤訊息，後面不執行
-      res.render('admin/restaurant', { restaurant })
-    }).catch(err => next(err))
+    adminServices.getRestaurant(req, (err, data) => err ? next(err) : res.render('admin/restaurant', data))
   },
   editRestaurant: (req, res, next) => {
     return Promise.all([
