@@ -38,7 +38,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/api', apis)
+app.use('/api', apis) // 條件較app.use(pages)嚴格因此放較前面
 app.use(pages)
 
 app.listen(port, () => {

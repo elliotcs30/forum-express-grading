@@ -3,11 +3,11 @@ const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const restaurantServices = {
   getRestaurants: (req, cb) => {
-    const DEFAULT_LIMIT = 9
+    const DEFAULT_LIMIT = 9 // 預設值: 一頁9筆資料
 
-    const categoryId = Number(req.query.categoryId) || ''
+    const categoryId = Number(req.query.categoryId) || '' // '' => 空值表"全部分類""
 
-    const page = Number(req.query.page) || 1
+    const page = Number(req.query.page) || 1 // 若queryString沒有攜帶特定數字則傳入1
     const limit = Number(req.query.limit) || DEFAULT_LIMIT
     const offset = getOffset(limit, page)
 
@@ -15,7 +15,7 @@ const restaurantServices = {
       Restaurant.findAndCountAll({
         include: Category,
         where: {
-          ...categoryId ? { categoryId } : {}
+          ...categoryId ? { categoryId } : {} // 檢查categoryId是否為空值
         },
         limit,
         offset,
@@ -31,7 +31,7 @@ const restaurantServices = {
         const data = restaurants.rows.map(r => ({
           ...r,
           description: r.description.substring(0, 50),
-          isFavorited: favoritedRestaurantsId.includes(r.id),
+          isFavorited: favoritedRestaurantsId.includes(r.id), // 回傳true/false
           isLiked: likedRestaurantsId.includes(r.id)
         }))
         return cb(null, {
